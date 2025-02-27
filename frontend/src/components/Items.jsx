@@ -7,7 +7,7 @@ const ItemList = () => {
 
     const fetchItems = async () => {
         try {
-            const response = await api.get("/items");
+            const response = await api.get("/api/items");
             setItems(response.data.items);
         } catch (error) { 
             console.error("Error fetching items:", error);
@@ -17,7 +17,7 @@ const ItemList = () => {
     const addItem = async (item) => {
         try {
             console.log(item);
-            await api.post("/items", { name: item });
+            await api.post("/api/items", { name: item });
             fetchItems();
         } catch (error) {
             console.error("Error adding item:", error);
