@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { login, signup } from '../api';
+import { login, signup } from '../../api';
 
 const Auth = ({ onLogin }) => {
     const [isLogin, setIsLogin] = useState(true);
