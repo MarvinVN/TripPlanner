@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import LoginForm from '../../components/AuthForm/Auth';
+import { LoginForm } from '../../components/AuthForm/Auth';
 
 const LandingPage = () => {
 
