@@ -1,5 +1,6 @@
 import React from 'react';
-import { RegisterForm } from '../../components/AuthForm/Auth';
+import { RegisterForm } from '../components/AuthForm/Auth';
+import '@/app/globals.css';
 
 const RegisterPage = () => {
 
