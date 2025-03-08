@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { login, signup } from '../../api';
-import { Link } from 'react-router-dom';
+import { login, signup } from '@/app/api';
+import Link from 'next/link';
 
 const LoginForm = ({ onLogin }) => {
     const [email, setEmail] = useState('');
@@ -63,7 +63,7 @@ const LoginForm = ({ onLogin }) => {
           <p className="text-sm text-gray-100">
             Don't have an account?{" "}
             <Link
-              to="/register"
+              href="/register"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
               Register here
@@ -155,7 +155,7 @@ const LoginForm = ({ onLogin }) => {
           <p className="text-sm text-gray-100">
             Already have an account?{" "}
             <Link
-              to="/login"
+              href="/"
               className="font-medium text-indigo-600 hover:text-indigo-500"
             >
               Login here
