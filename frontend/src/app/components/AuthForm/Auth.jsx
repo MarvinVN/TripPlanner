@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { login, signup } from '@/app/api';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const LoginForm = ({ onLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const router = useRouter();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -12,6 +14,7 @@ const LoginForm = ({ onLogin }) => {
             const response = await login(email, password);
             localStorage.setItem("access_token", response.access_token);
             onLogin(response);
+            router.push('/trips');
         } catch (error) {
             console.error('Authentication error:', error);
             alert(error.response?.data?.detail || 'Authentication failed');
@@ -78,6 +81,7 @@ const LoginForm = ({ onLogin }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const router = useRouter();
 
     const handleSubmit = async (e) => {
       e.preventDefault();
@@ -90,6 +94,7 @@ const LoginForm = ({ onLogin }) => {
         const response = await signup(email, password);
         localStorage.setItem("access_token", response.access_token);
         onRegister(response);
+        router.push('/trips');
       } catch (error) {
         console.error('Authentication error:', error);
         alert(error.response?.data?.detail || 'Authentication failed');

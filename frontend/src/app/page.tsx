@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useState } from 'react';
-import { LoginForm } from '@/components/AuthForm/Auth';
+import { LoginForm } from '@/app/components/AuthForm/Auth';
 
 export default function LandingPage() {
 
   const [user, setUser] = useState(null);
 
-  const handleLogin = (userData) => {
+  const handleLogin = (userData: any) => {
       setUser(userData);
       localStorage.setItem("user", JSON.stringify(userData));
   };
