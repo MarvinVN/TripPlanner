@@ -1,7 +1,9 @@
-from fastapi import HTTPException
+from fastapi import Depends, HTTPException
 from pydantic import BaseModel
+
+from core.security import get_current_user
 from db.supabase import supabase
-from models.trip import Trip, TripRequest
+from models.trip import TripRequest
 
 class TripService:
 
@@ -9,11 +11,11 @@ class TripService:
         user_id: str
 
     @staticmethod
-    async def create_trip(trip: TripRequest):
+    async def create_trip(trip: TripRequest, user = Depends(get_current_user)):
         try:
-            print(supabase.auth.get_user())
-            print(supabase.auth.get_user()['id'])
-            trip['owner_id'] = supabase.auth.get_user()['id']
+            print("UNGAUNGAUGNA")
+            trip.owner_id = user.user.id
+            print("BYUNBAUYBNA")
             trip_dict = vars(trip)
             response = (
                 supabase.table('tbl_trips')

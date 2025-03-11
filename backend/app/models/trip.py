@@ -15,7 +15,7 @@ class Trips(BaseModel):
     trips: list[Trip]
 
 class TripRequest(BaseModel):
-    #owner_id: str
+    owner_id: str = None
     title: str
     description: str = None
     start_date: str= None

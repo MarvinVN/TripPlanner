@@ -2,16 +2,23 @@
 
 import React from 'react';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
 
 export default function Trips() {
 
     const [title, setTitle] = React.useState('');
+    const { getToken } = useAuth();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        const token = await getToken()
         try {
             console.log(title)
-            const { data } = await axios.post('http://localhost:8000/api/trips', { "title": title });
+            const headers = {
+                Authorization: `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+            const { data } = await axios.post('http://localhost:8000/api/trips', { "title": title }, { headers });
             console.log(data);
             setTitle('');
         } catch (error) {
