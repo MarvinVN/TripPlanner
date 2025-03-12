@@ -1,12 +1,13 @@
+from typing import Optional
 from pydantic import BaseModel
 
 class Trip(BaseModel):
     trip_id: int
     owner_id: str
     title: str
-    description: str
-    start_date: str
-    end_date: str
+    description: Optional[str] = None
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
     created_at: str
     updated_at: str
 

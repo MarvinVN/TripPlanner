@@ -3,19 +3,14 @@ from pydantic import BaseModel
 
 from core.security import get_current_user
 from db.supabase import supabase
-from models.trip import TripRequest
+from models.trip import TripRequest, Trips, Trip
 
 class TripService:
-
-    class User_ID(BaseModel):
-        user_id: str
 
     @staticmethod
     async def create_trip(trip: TripRequest, user = Depends(get_current_user)):
         try:
-            print("UNGAUNGAUGNA")
             trip.owner_id = user.user.id
-            print("BYUNBAUYBNA")
             trip_dict = vars(trip)
             response = (
                 supabase.table('tbl_trips')
@@ -26,20 +21,32 @@ class TripService:
         except Exception as e:
             print(e)
             raise HTTPException(status_code=400, detail=str(e))
-    
+        
     @staticmethod
-    async def get_user_trips(user_id: User_ID):
-        print(user_id)
-        print(type(user_id))
-        print(user_id.user_id)
-        print(supabase.auth.get_user()['id'])
+    async def get_trip(trip_id: int, user = Depends(get_current_user)):
         try:
             response = (
                 supabase.table('tbl_trips')
                 .select('*')
-                .eq('owner_id', supabase.auth.get_user()['id'])
+                .eq('trip_id', trip_id)
+                .eq('owner_id', user.user.id)
                 .execute()
             )
-            return response.data
+            return Trip(**response.data[0])
         except Exception as e:
+            print(e)
+            raise HTTPException(status_code=400, detail=str(e))
+    
+    @staticmethod
+    async def get_user_trips(user = Depends(get_current_user)):
+        try:
+            response = (
+                supabase.table('tbl_trips')
+                .select('*')
+                .eq('owner_id', user.user.id)
+                .execute()
+            )
+            return [Trip(**trip) for trip in response.data]
+        except Exception as e:
+            print(e)
             raise HTTPException(status_code=400, detail=str(e))

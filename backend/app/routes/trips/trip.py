@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
 
 from core.security import get_current_user
-from models.trip import TripRequest, Trips
+from models.trip import Trip, TripRequest, Trips
 from services.trip_service import TripService
 
 router = APIRouter(prefix="/trips")
@@ -12,8 +12,21 @@ class User_ID(BaseModel):
 
 @router.post("", response_model=int)
 async def create_trip(trip: TripRequest, user = Depends(get_current_user)):
-    return await TripService.create_trip(trip, user)
+    try:
+        return await TripService.create_trip(trip, user)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
 
-@router.get("", response_model=Trips)
-async def get_user_trips(user_id: User_ID):
-    return await TripService.get_user_trips(user_id)
+@router.get("/trip", response_model=Trip)
+async def get_trip(trip_id: int, user = Depends(get_current_user)):
+    try:
+        return await TripService.get_trip(trip_id, user)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+
+@router.get("", response_model=list[Trip])
+async def get_user_trips(user = Depends(get_current_user)):
+    try:
+        return await TripService.get_user_trips(user)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
