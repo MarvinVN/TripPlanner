@@ -4,6 +4,8 @@ import React from 'react';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
 import { Trip } from '../types';
+import { TripCard } from './components/card';
+import { Spacer } from '@heroui/react';
 
 export default function Trips() {
 
@@ -69,16 +71,17 @@ export default function Trips() {
                         Submit
                     </button>
                 </form>
-                <div className="mt-10">
-                    <h2 className="text-2xl font-bold text-gray-300 mb-4">Trips</h2>
-                    <ul className="space-y-4">
-                        {trips.map((trip: Trip) => (
-                            <li key={trip.trip_id} className="p-4 border border-gray-300 rounded-md shadow-sm">
-                                <h3 className="text-xl font-bold text-gray-200">{trip.title}</h3>
-                                <p className="text-gray-400">{trip.description}</p>
-                            </li>
-                        ))}
-                    </ul>
+                <div>
+                    <TripCard trip={{ trip_id: 1, owner_id: "1", title: 'Trip 1', description: 'Trip 1 description', start_date: '2021-10-01', end_date: '2021-10-10', created_at: '2021-09-01', updated_at: '2021-09-01' }}>
+                    </TripCard>
+                </div>
+                <h2 className="text-2xl font-bold text-gray-300 mb-4">Trips</h2>
+                <div className="grid grid-cols-2 gap-4">
+                    {trips.map((trip: Trip) => (
+                        <div key={trip.trip_id} className="shadow-sm">
+                            <TripCard trip={trip} />
+                        </div>
+                    ))}
                 </div>
             </div>
         </div>
