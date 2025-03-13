@@ -6,6 +6,7 @@ import { useAuth } from '../context/AuthContext';
 import { Trip } from '../types';
 import { TripCard } from './components/card';
 import { Spacer } from '@heroui/react';
+import { CreateTripCard } from './components/create-trip-card';
 
 export default function Trips() {
 
@@ -50,7 +51,7 @@ export default function Trips() {
 
     return (
         <div className='App flex h-screen'>
-            <div className="w-full max-w-md mx-auto mt-10">
+            <div className="w-full max-w-2xl mx-auto mt-10">
                 <h1 className="text-3xl font-bold text-gray-300 mb-6">Create a Trip</h1>
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
@@ -77,8 +78,9 @@ export default function Trips() {
                 </div>
                 <h2 className="text-2xl font-bold text-gray-300 mb-4">Trips</h2>
                 <div className="grid grid-cols-2 gap-4">
+                    <CreateTripCard></CreateTripCard>
                     {trips.map((trip: Trip) => (
-                        <div key={trip.trip_id} className="shadow-sm">
+                        <div key={trip.trip_id}>
                             <TripCard trip={trip} />
                         </div>
                     ))}

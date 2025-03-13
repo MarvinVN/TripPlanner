@@ -1,12 +1,12 @@
 import { Trip } from "@/app/types";
-import { Card, Image } from "@heroui/react";
+import { Image } from "@heroui/react";
+import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
 
 export function TripCard({ trip }: { trip: Trip }) {
 
     return (
-        <Card isPressable onPress={() => console.log('Pressed: ' + trip.trip_id)}>
-            <div className = "grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 bg-purple-500 items-center justify-center">
-                <div className = "relative col-span-6 md:col-span-4">
+        <Card className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 bg-purple-300 items-center justify-center hover:shadow-lg">
+             <div className = "relative col-span-6 md:col-span-4">
                     <Image
                         alt="Album cover"
                         className="object-cover"
@@ -16,14 +16,14 @@ export function TripCard({ trip }: { trip: Trip }) {
                         width="100%"
                     />
                 </div>
-                <div className="flex flex-col col-span-6 md:col-span-8 items-end justify-center">
-                    <div className="flex flex-col col-span-6 md:col-span-8 items-start justify-center p-4">
-                        <h1 className="text-2xl font-bold text-gray-200">{trip.title}</h1>
-                        <p className="text-gray-300">{trip.description}</p>
-                        <p className="text-sm text-gray-300">{trip.start_date} - {trip.end_date}</p>
-                    </div>
+            <CardHeader className="flex flex-col col-span-6 md:col-span-8 items-end justify-end">
+                <div>
+                    <CardTitle className="text-2xl">{trip.title}</CardTitle>
+                    <CardDescription className="text-md">{trip.description}</CardDescription>
                 </div>
-            </div>
+            </CardHeader>
+            <CardContent></CardContent>
+            <CardFooter></CardFooter>
         </Card>
     )
 
