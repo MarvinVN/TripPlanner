@@ -14,7 +14,7 @@ export default function PageHeader() {
     return (
         <header className="flex justify-between items-center py-4 px-6 border-b border-gray-300">
             <div>
-                <img src="" alt="Logo Here" className="h-10"/>
+                <img src={undefined} alt="Logo Here" className="h-10"/>
             </div>
             <div>
                 <Popover open={isPopoverOpen} onOpenChange={handlePopoverToggle}>
