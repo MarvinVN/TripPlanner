@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { Trip } from "@/app/types";
 import Image from "next/image";
-import { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
+import { Card, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { IconDotsVertical } from "@tabler/icons-react";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
 
 export function TripCard({ trip }: { trip: Trip }) {
     const [isPopoverOpen, setIsPopoverOpen] = useState(false)
@@ -36,21 +35,27 @@ export function TripCard({ trip }: { trip: Trip }) {
                 </CardContent>
             </div>
             <div className="flex flex-col">
-                <Popover open={isPopoverOpen} onOpenChange={handlePopoverToggle}>
-                    <PopoverTrigger className="flex justify-end pr-2">
+                <DropdownMenu open={isPopoverOpen} onOpenChange={handlePopoverToggle}>
+                    <DropdownMenuTrigger className="flex justify-end pr-2">
                         <div className="p-1 rounded-full bg-purple-300 hover:bg-purple-400">
                             <IconDotsVertical/>
                         </div>
-                    </PopoverTrigger>
-                    <PopoverContent className="p-0 mr-20 w-50 bg-white shadow-lg rounded-md">
-                        <ul className="list-none m-0">
-                            <li><button className="block w-full text-left p-2 bg-white-100 hover:bg-gray-100 rounded-t-md" onClick={handlePopoverToggle}><p className="pl-1 text-black">Edit</p></button></li>
-                            <li><button className="block w-full text-left p-2 bg-white-100 hover:bg-gray-100 rounded-none" onClick={handlePopoverToggle}><p className="pl-1 text-black">Duplicate</p></button></li>
-                            <li><button className="block w-full text-left p-2 bg-white-100 hover:bg-gray-100 rounded-b-md" onClick={handlePopoverToggle}><p className="pl-1 text-black">Share</p></button></li>
-                            <li><button className="block w-full text-left p-2 bg-white-100 hover:bg-gray-100 rounded-b-md" onClick={handlePopoverToggle}><p className="pl-1 text-red-500">Delete</p></button></li>
-                        </ul>
-                    </PopoverContent>
-                </Popover>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent className="mr-20 w-50 bg-white shadow-lg rounded-md">
+                        <div className="hover:bg-gray-100 rounded-t-md"><DropdownMenuItem onClick={handlePopoverToggle}>
+                            <button className="block w-full text-left bg-white-100"><p className="text-black">Edit</p></button>
+                        </DropdownMenuItem></div>
+                        <div className="hover:bg-gray-100 rounded-none"><DropdownMenuItem onClick={handlePopoverToggle} className="hover:bg-gray-100 rounded-none">
+                            <button className="block w-full text-left bg-white-100"><p className="text-black">Duplicate</p></button>
+                        </DropdownMenuItem></div>
+                        <div className="hover:bg-gray-100 rounded-none"><DropdownMenuItem onClick={handlePopoverToggle} className="hover:bg-gray-100 rounded-none">
+                            <button className="block w-full text-left bg-white-100"><p className="text-black">Share</p></button>
+                        </DropdownMenuItem></div>
+                        <div className="hover:bg-gray-100 rounded-b-md"><DropdownMenuItem onClick={handlePopoverToggle} className="hover:bg-gray-100 rounded-b-md">
+                            <button className="block w-full text-left bg-white-100"><p className="text-red-500">Delete</p></button>
+                        </DropdownMenuItem></div>
+                    </DropdownMenuContent>
+                </DropdownMenu>
             </div>
         </Card>
     )
