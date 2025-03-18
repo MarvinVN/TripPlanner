@@ -30,3 +30,10 @@ async def get_user_trips(user = Depends(get_current_user)):
         return await TripService.get_user_trips(user)
     except Exception as e:
         raise HTTPException(status_code=400, detail=str(e))
+    
+@router.delete("/trip")
+async def delete_trip(trip_id: int, user = Depends(get_current_user)):
+    try:
+        return await TripService.delete_trip(trip_id, user)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))

@@ -50,3 +50,19 @@ class TripService:
         except Exception as e:
             print(e)
             raise HTTPException(status_code=400, detail=str(e))
+        
+    @staticmethod
+    async def delete_trip(trip_id: int, user = Depends(get_current_user)):
+        try:
+            print(f"Attempting to delete trip with id: {trip_id} for user: {user.user.id}")
+            response = (
+                supabase.table("tbl_trips")
+                .delete()
+                .eq("trip_id", trip_id)
+                .eq("owner_id", user.user.id)
+                .execute()
+            )
+            print(f"trip deleted: {response}")
+        except Exception as e:
+            print(e)
+            raise HTTPException(status_code=400, detail=str(e))
