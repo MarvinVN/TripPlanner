@@ -9,7 +9,7 @@ const LoginForm = () => {
     const [password, setPassword] = useState('');
     const router = useRouter();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
         e.preventDefault();
         const supabase = createClient();
 
@@ -18,9 +18,9 @@ const LoginForm = () => {
           password
         });
 
-        if (error) {
+        if (error instanceof Error) {
           console.error('Authentication error:', error);
-          alert(error.response?.data?.detail || 'Authentication failed');
+          alert(error.message || 'Authentication failed');
         } else {
           router.push('/trips');
         }
@@ -82,13 +82,13 @@ const LoginForm = () => {
     );
   };
 
-  const RegisterForm = ({ onRegister }) => {
+  const RegisterForm = ({ onRegister }: { onRegister: (response: any) => void }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const router = useRouter();
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = async (e: { preventDefault: () => void; }) => {
       e.preventDefault();
       if (password !== confirmPassword) {
         alert('Passwords do not match');
@@ -101,8 +101,10 @@ const LoginForm = () => {
         onRegister(response);
         router.push('/trips');
       } catch (error) {
-        console.error('Authentication error:', error);
-        alert(error.response?.data?.detail || 'Authentication failed');
+        if (error instanceof Error) {
+          console.error('Authentication error:', error);
+          alert(error.message || 'Authentication failed');
+        }
       }
     };
 
